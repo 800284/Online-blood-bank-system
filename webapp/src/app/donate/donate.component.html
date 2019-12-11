@@ -1,0 +1,13 @@
+<div>
+    <h2 class="text-white text-alignment  font-size-custom mt-4">Do something good today! Donate blood!</h2>
+    <h5 class="text-white text-alignment font-size-custom  mt-4">According to a recent World
+        Health Organisation (WHO) report, only nine million units are collected annually, while the requirement is for
+        12 million units.</h5>
+    <span class=" mt-5 justify-content-center d-flex">
+        <a class=" mr-3 btn btn-danger font-size-custom" routerLink="/register" *ngIf="!isLogin()">Register</a>
+
+        <div class="btn btn-danger" routerLink="/login" *ngIf="!isLogin()">Login</div>
+        <div class="btn btn-danger" routerLink="/donation-request" *ngIf="isLogin()">Hi {{getUserName()}}! Donate Now
+        </div>
+    </span>
+</div>

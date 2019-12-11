@@ -1,0 +1,128 @@
+<div class="container">
+    <section class="border shadow-lg rounded-lg section-margin">
+        <h1 class="mt-5 ml-3 text-alignment text-danger">Check Blood Group Availability</h1>
+        <form class="text-secondary" [formGroup]="bloodAvailabilityForm" (ngSubmit)="search(bloodAvailabilityForm)">
+            <div class="form-row  ml-3 mr-3">
+                <div class="col-md-6 mt-3 " formGroupName="stateDivision">
+                    <label class="font-weight-bold text-red" for="field-state">State*</label>
+                    <select
+                        [ngClass]="[bloodAvailabilityForm.get('stateDivision').get('state').dirty ? 'is-valid' : '',
+                                bloodAvailabilityForm.get('stateDivision').get('state').touched 
+                                && !bloodAvailabilityForm.get('stateDivision').get('state').dirty ? 'is-invalid' : '', 
+                                (bloodAvailabilityForm.get('stateDivision').get('state').valid 
+                                || bloodAvailabilityForm.get('stateDivision').get('state').invalid) ? 'form-control mb-1' : '']"
+                        name="state" id="field-state" formControlName="state"
+                        (change)="changeState($event.target.value) " (click)="stateCheck($event.target.value)">
+                        <option *ngFor="let state of states" [value]="state.name">{{ state.name }}</option>
+                    </select>
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="bloodAvailabilityForm.get('stateDivision').get('state').touched && !bloodAvailabilityForm.get('stateDivision').get('state').dirty">
+                        State is required !
+                    </div>
+                </div>
+                <div class="col-md-6 mt-3 " formGroupName="areaDivision">
+                    <label class="font-weight-bold text-red" for="field-area">Area*</label>
+                    <select
+                        [ngClass]="[bloodAvailabilityForm.get('areaDivision').get('area').dirty ? 'is-valid' : '',
+                                (!bloodAvailabilityForm.get('stateDivision').get('state').touched && bloodAvailabilityForm.get('areaDivision').get('area').touched) || 
+                                (bloodAvailabilityForm.get('areaDivision').get('area').touched && bloodAvailabilityForm.get('stateDivision').get('state').touched 
+                                && bloodAvailabilityForm.get('stateDivision').get('state').dirty && !bloodAvailabilityForm.get('areaDivision').get('area').dirty) || areaClick && areaEmpty? 'is-invalid' : '', 
+                                (bloodAvailabilityForm.get('areaDivision').get('area').valid || bloodAvailabilityForm.get('areaDivision').get('area').invalid) ? 'form-control mb-1' : '']"
+                        name="area" id="field-area" formControlName="area"
+                        (click)="areaClickFun(bloodAvailabilityForm.get('areaDivision').get('area').value)">
+                        <option *ngFor="let area of cities" [value]="area">{{ area }}</option>
+                    </select>
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="!bloodAvailabilityForm.get('stateDivision').get('state').touched && bloodAvailabilityForm.get('areaDivision').get('area').touched">
+                        Select state first !
+                    </div>
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="bloodAvailabilityForm.get('areaDivision').get('area').touched && bloodAvailabilityForm.get('stateDivision').get('state').touched 
+                        && bloodAvailabilityForm.get('stateDivision').get('state').dirty && !bloodAvailabilityForm.get('areaDivision').get('area').dirty || areaClick && areaEmpty">
+                        Area is required !
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-row ml-3 mr-3">
+                <div class="col-md-6 mt-3 " formGroupName="bloodGroupDivision">
+                    <label class="font-weight-bold text-red" for="field-bloodGroup">Blood Group*</label>
+                    <select
+                        [ngClass]="[bloodAvailabilityForm.get('bloodGroupDivision').get('bloodGroup').dirty ? 'is-valid' : '',
+                            bloodAvailabilityForm.get('bloodGroupDivision').get('bloodGroup').touched 
+                            && !bloodAvailabilityForm.get('bloodGroupDivision').get('bloodGroup').dirty ? 'is-invalid' : '', 
+                            (bloodAvailabilityForm.get('bloodGroupDivision').get('bloodGroup').valid 
+                            || bloodAvailabilityForm.get('bloodGroupDivision').get('bloodGroup').invalid) ? 'form-control mb-1' : '']"
+                        name="bloodGroup" id="field-bloodGroup" formControlName="bloodGroup">
+                        <option *ngFor="let bg of bloodGroup" [value]="bg">{{ bg }}</option>
+                    </select>
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="bloodAvailabilityForm.get('bloodGroupDivision').get('bloodGroup').touched && !bloodAvailabilityForm.get('bloodGroupDivision').get('bloodGroup').dirty">
+                        Blood Group is required !
+                    </div>
+                </div>
+                <div class="col-md-6 mt-3 ">
+                    <label class="font-weight-bold text-red" for="field-pinCode">Pin Code*</label>
+                    <input type="number"
+                        [ngClass]="[bloodAvailabilityForm.get('pinCode').dirty && bloodAvailabilityForm.get('pinCode').valid ? 'is-valid' : '',
+                                    bloodAvailabilityForm.get('pinCode').dirty && bloodAvailabilityForm.get('pinCode').invalid ? 'is-invalid' : '', 
+                                    (bloodAvailabilityForm.get('pinCode').valid || bloodAvailabilityForm.get('pinCode').invalid) ? 'form-control mb-1' : '']"
+                        name="pinCode" id="field-pinCode" placeholder="Enter Pin Code" formControlName="pinCode">
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="bloodAvailabilityForm.get('pinCode').dirty && bloodAvailabilityForm.get('pinCode').errors?.required">
+                        Pin Code is required !
+                    </div>
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="bloodAvailabilityForm.get('pinCode').dirty && (bloodAvailabilityForm.get('pinCode').errors?.min || bloodAvailabilityForm.get('pinCode').errors?.max)">
+                        Pin Code should be of 6 digits !
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between form-row mt-3 mb-5 ml-3">
+                <button type="submit" class="btn btn-danger font-20"
+                    [disabled]="!bloodAvailabilityForm.valid || 
+                            !bloodAvailabilityForm.get('bloodGroupDivision').get('bloodGroup').touched 
+                            || (bloodAvailabilityForm.get('bloodGroupDivision').get('bloodGroup').touched 
+                            && !bloodAvailabilityForm.get('bloodGroupDivision').get('bloodGroup').dirty) ||
+                            !bloodAvailabilityForm.get('stateDivision').get('state').touched || (bloodAvailabilityForm.get('stateDivision').get('state').touched 
+                            && !bloodAvailabilityForm.get('stateDivision').get('state').dirty) ||
+                            !bloodAvailabilityForm.get('areaDivision').get('area').touched 
+                            || (bloodAvailabilityForm.get('areaDivision').get('area').touched && !bloodAvailabilityForm.get('areaDivision').get('area').dirty)|| areaClick && areaEmpty">
+                    Search</button>
+            </div>
+        </form>
+        <div class="container d-flex justify-content-center" *ngIf="show=='table'">
+            <div class="well-light width-large table-responsive shadow-lg p-4 m-4">
+                <table class="table table-hover font-20">
+                    <thead class="text-danger bg-red text-alignment">
+                        <tr>
+                            <th>Blood Group</th>
+                            <th>State</th>
+                            <th>Area</th>
+                            <th>Pin Code</th>
+                            <th>Contact Number</th>
+                        </tr>
+                    </thead>
+                    <tbody class="font-weight-bold text-alignment">
+                        <tr *ngFor="let bloodAvailable of bloodAvailability">
+                            <td>{{ bloodAvailable.bloodGroup }}</td>
+                            <td>{{ bloodAvailable.state }}</td>
+                            <td>{{ bloodAvailable.area }}</td>
+                            <td>{{ bloodAvailable.pinCode }}</td>
+                            <td>{{ bloodAvailable.contactNo }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="container d-flex justify-content-center" *ngIf="show=='request'">
+            <div class="well-light width-large shadow-lg p-4 m-4">
+                <h6 class="text-red ">There is <strong>No Blood Available</strong> for above requirement !!</h6>
+                <h3 class="text-dark ">Want to Post the Blood Requirement ??</h3>
+                <button type="submit" routerLink="/blood-requirement" class="btn btn-danger font-20"
+                    routerLink="/add-requirement">
+                    Post Requirement</button>
+            </div>
+        </div>
+    </section>
+</div>

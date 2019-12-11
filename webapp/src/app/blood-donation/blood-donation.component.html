@@ -1,0 +1,122 @@
+<div class="container">
+    <section class="border shadow-lg rounded-lg section-margin" *ngIf="!hospitalBooking">
+        <h1 class="mt-5 ml-3 text-alignment text-danger">Enter Your Personal Details</h1>
+        <form class="text-secondary" [formGroup]="donorRequestForm" (ngSubmit)="appointmentRequest(donorRequestForm)">
+            <div class="form-row  ml-3 mr-3">
+                <div class="col-md-4 mt-3 " formGroupName="stateDivision">
+                    <label class="font-weight-bold text-red" for="field-state">State*</label>
+                    <select
+                        [ngClass]="[donorRequestForm.get('stateDivision').get('state').dirty  ? 'is-valid' : '',
+                                donorRequestForm.get('stateDivision').get('state').touched && !donorRequestForm.get('stateDivision').get('state').dirty  ? 'is-invalid' : '', 
+                                (donorRequestForm.get('stateDivision').get('state').valid || donorRequestForm.get('stateDivision').get('state').invalid) ? 'form-control mb-1' : '']"
+                        name="state" (click)="stateCheck($event.target.value)" id="field-state" formControlName="state"
+                        (change)="changeState($event.target.value)">
+                        <option *ngFor="let state of states" [value]="state.name">{{ state.name }}</option>
+                    </select>
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="donorRequestForm.get('stateDivision').get('state').touched && !donorRequestForm.get('stateDivision').get('state').dirty">
+                        State is required !
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3 " formGroupName="areaDivision">
+                    <label class="font-weight-bold text-red" for="field-area">Area*</label>
+                    <select
+                        [ngClass]="[donorRequestForm.get('areaDivision').get('area').dirty ? 'is-valid' : '',
+                                (!donorRequestForm.get('stateDivision').get('state').touched 
+                                && donorRequestForm.get('areaDivision').get('area').touched) || 
+                                (donorRequestForm.get('areaDivision').get('area').touched && donorRequestForm.get('stateDivision').get('state').touched 
+                                && donorRequestForm.get('stateDivision').get('state').dirty && !donorRequestForm.get('areaDivision').get('area').dirty) 
+                                || areaClick && areaEmpty  ? 'is-invalid' : '', 
+                                (donorRequestForm.get('areaDivision').get('area').valid || donorRequestForm.get('areaDivision').get('area').invalid) ? 'form-control mb-1' : '']"
+                        name="area" id="field-area"
+                        (click)="areaClickFun(donorRequestForm.get('areaDivision').get('area').value)"
+                        formControlName="area">
+                        <option *ngFor="let area of cities" [value]="area">{{ area }}</option>
+                    </select>
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="!donorRequestForm.get('stateDivision').get('state').touched && donorRequestForm.get('areaDivision').get('area').touched">
+                        Select state first !
+                    </div>
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="donorRequestForm.get('areaDivision').get('area').touched && donorRequestForm.get('stateDivision').get('state').touched 
+                        && donorRequestForm.get('stateDivision').get('state').dirty && !donorRequestForm.get('areaDivision').get('area').dirty || areaClick && areaEmpty ">
+                        Area is required !
+                    </div>
+
+                </div>
+                <div class="col-md-4 mt-3 ">
+                    <label class="font-weight-bold text-red" for="field-pinCode">Pin Code*</label>
+                    <input type="number"
+                        [ngClass]="[donorRequestForm.get('pinCode').dirty && donorRequestForm.get('pinCode').valid ? 'is-valid' : '',
+                                    donorRequestForm.get('pinCode').dirty && donorRequestForm.get('pinCode').invalid ? 'is-invalid' : '', 
+                                    (donorRequestForm.get('pinCode').valid || donorRequestForm.get('pinCode').invalid) ? 'form-control mb-1' : '']"
+                        name="pinCode" id="field-pinCode" placeholder="Enter Pin Code" formControlName="pinCode">
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="donorRequestForm.get('pinCode').dirty && donorRequestForm.get('pinCode').errors?.required">
+                        Pin Code is required !
+                    </div>
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="donorRequestForm.get('pinCode').dirty && (donorRequestForm.get('pinCode').errors?.min || donorRequestForm.get('pinCode').errors?.max)">
+                        Pin Code should be of 6 digits !
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-row ml-3 mr-3">
+                <div class="col-md-6 mt-3 " formGroupName="bloodGroupDivision">
+                    <label class="font-weight-bold text-red" for="field-bloodGroup">Blood Group*</label>
+                    <select
+                        [ngClass]="[donorRequestForm.get('bloodGroupDivision').get('bloodGroup').dirty ? 'is-valid' : '',
+                            donorRequestForm.get('bloodGroupDivision').get('bloodGroup').touched && !donorRequestForm.get('bloodGroupDivision').get('bloodGroup').dirty ? 'is-invalid' : '', 
+                            (donorRequestForm.get('bloodGroupDivision').get('bloodGroup').valid || donorRequestForm.get('bloodGroupDivision').get('bloodGroup').invalid) ? 'form-control mb-1' : '']"
+                        name="bloodGroup" id="field-bloodGroup" formControlName="bloodGroup">
+                        <option *ngFor="let bg of bloodGroup" [value]="bg">{{ bg }}</option>
+                    </select>
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="donorRequestForm.get('bloodGroupDivision').get('bloodGroup').touched && !donorRequestForm.get('bloodGroupDivision').get('bloodGroup').dirty">
+                        Blood Group is required !
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6  mt-3">
+                    <label class="font-weight-bold text-red" for="field-contactNo">Contact Number*</label>
+                    <input type="text"
+                        [ngClass]="[donorRequestForm.get('contactNo').dirty && donorRequestForm.get('contactNo').valid ? 'is-valid' : '',
+                            donorRequestForm.get('contactNo').dirty && donorRequestForm.get('contactNo').invalid ? 'is-invalid' : '', 
+                            (donorRequestForm.get('contactNo').valid || donorRequestForm.get('contactNo').invalid) ? 'form-control mb-1' : '']"
+                        name="contactNo" id="field-contactNo" placeholder="Enter Contact Number"
+                        formControlName="contactNo">
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="donorRequestForm.get('contactNo').dirty && donorRequestForm.get('contactNo').errors?.required">
+                        Contact Number is required !
+                    </div>
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="donorRequestForm.get('contactNo').dirty && !donorRequestForm.get('contactNo').errors?.pattern 
+                        && (donorRequestForm.get('contactNo').errors?.minlength || donorRequestForm.get('contactNo').errors?.maxlength)">
+                        Contact number should be of 10 digits !
+                    </div>
+                    <div class="text-danger font-weight-bold position-absolute small"
+                        *ngIf="donorRequestForm.get('contactNo').dirty && donorRequestForm.get('contactNo').errors?.pattern">
+                        Contact number should contains number only !
+                    </div>
+                </div>
+
+            </div>
+            <div class="d-flex justify-content-between form-row mt-3 mb-5 ml-3">
+                <button type="submit" class="btn btn-danger font-20"
+                    [disabled]="!donorRequestForm.valid || 
+                            !donorRequestForm.get('bloodGroupDivision').get('bloodGroup').touched 
+                            || (donorRequestForm.get('bloodGroupDivision').get('bloodGroup').touched && !donorRequestForm.get('bloodGroupDivision').get('bloodGroup').dirty) ||
+                            !donorRequestForm.get('stateDivision').get('state').touched || 
+                            (donorRequestForm.get('stateDivision').get('state').touched && !donorRequestForm.get('stateDivision').get('state').dirty) ||
+                            !donorRequestForm.get('areaDivision').get('area').touched || (donorRequestForm.get('areaDivision').get('area').touched && 
+                            !donorRequestForm.get('areaDivision').get('area').dirty)  || areaClick && areaEmpty || areaEmpty">
+                    Request</button>
+            </div>
+        </form>
+    </section>
+    <div *ngIf="bookAppointment">
+        <app-book-hospital [hospitalBookingRequest]="hospitalBookingRequest"
+            (hospitalBooked)="isHospitalBooked($event)"></app-book-hospital>
+    </div>
+
+</div>

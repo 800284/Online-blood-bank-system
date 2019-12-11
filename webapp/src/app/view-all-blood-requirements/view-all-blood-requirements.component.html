@@ -1,0 +1,29 @@
+<div class="container text-alignment mb-5" *ngIf="dataLoaded | async">
+    <div class="alert bg-danger alert-box-requirement text-white  mr-5">
+        Pending Blood Requests!
+    </div>
+    <div class="notify-requirement mr-5">
+        <table class="table table-hover table-align-center" *ngIf="requirementIsThere; else elseBlock">
+            <thead>
+                <tr>
+                    <th>BloodGroup</th>
+                    <th>State</th>
+                    <th>Area</th>
+                    <th>Pincode</th>
+                    <th>ContactNumber</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let req of bloodRequirement">
+                <tr>
+                    <td>{{req.bloodGroup}}</td>
+                    <td>{{req.state}}</td>
+                    <td>{{req.area}}</td>
+                    <td>{{req.pincode}}</td>
+                    <td>{{req.contactNumber}}</td>
+                    <td class="btn btn-danger" (click)="donate()">Donate</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

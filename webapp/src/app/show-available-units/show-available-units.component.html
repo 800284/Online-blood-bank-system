@@ -1,0 +1,26 @@
+<div class="container mt-5">
+    <div class="alert alert-success" *ngIf="notified">
+        Notification sent successfully!!
+    </div>
+    <div class="card">
+        <div class="card-header bg-danger" id="headingOne">
+            <h1 class="mb-0 text-alignment text-white">
+
+                Blood Unit Count
+            </h1>
+        </div>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center"
+            *ngFor="let availabeBloodUnits of availableUnits">
+            <div class=""> BloodGroup : <b> {{availabeBloodUnits.bloodGroup}} </b></div>
+            <div class=" ml-3"> Avaialble blood units : <b> {{availabeBloodUnits.count}}</b></div>
+            <div *ngIf="availabeBloodUnits.count < 2">
+                <span class="badge badge-danger badge-pill mt-1 mb-1 mr-1 ml-2">**Low**</span>
+            </div>
+            <button class="btn btn-danger rounded-lg ml-auto text-white"
+                (click)="sendNotifications(availabeBloodUnits.bloodGroup)">
+                Send Notification</button>
+        </li>
+    </ul>
+</div>

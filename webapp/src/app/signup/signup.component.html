@@ -1,0 +1,343 @@
+<div class="container">
+    <section class="border shadow-lg rounded-lg section-margin">
+        <h1 class="mt-5 ml-3 text-alignment text-danger">Register to Donate</h1>
+        <form [formGroup]="signupForm" (ngSubmit)="userAdd(signupForm)" novalidate>
+            <section class="border border-danger ml-2 mr-2 pb-4">
+                <div>
+                    <h4 class="ml-3 text-alignment text-danger">Login Details</h4>
+                </div>
+                <div class="form-row ml-3 mr-3">
+                    <div class="col-sm-12 col-lg-6  mt-4">
+                        <label for="username">Username*</label>
+                        <span *ngIf="signupForm.get('userName').touched;else elseBlockUserName">
+                            <input type="text" class="form-control" placeholder="Enter Username"
+                                formControlName="userName" id="username" name="username" (keyup)="changeValue()"
+                                [ngClass]="{
+                            'border border-danger': signupForm.get('userName').errors?.required || signupForm.get('userName').errors?.minlength 
+                            || signupForm.get('userName').errors?.maxlength || userPresent, 
+                            '': !signupForm.get('userName').errors?.required || !signupForm.get('userName').errors?.minlength || !signupForm.get('userName').errors?.maxlength
+                          }" />
+                            <div>
+                                <div class="text-danger  position-absolute"
+                                    *ngIf="signupForm.get('userName').errors?.minlength || signupForm.get('userName').errors?.maxlength">
+                                    Length should be between 2 & 15!
+                                </div>
+
+                                <div class="text-danger position-absolute"
+                                    *ngIf="signupForm.get('userName').errors?.required">
+                                    Username is required!
+                                </div>
+                            </div>
+                        </span>
+                        <ng-template #elseBlockUserName><input type="text" class="form-control"
+                                placeholder="Enter Username" formControlName="userName" id="username" name="username" />
+                        </ng-template>
+                        <div *ngIf="userPresent" class="text-danger position-absolute">
+                            User Already Exists
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row ml-3 mr-3">
+                    <div class="col-sm-12 col-md-6 mt-4">
+                        <label for="firstname">First Name*</label>
+                        <span *ngIf="signupForm.get('firstName').touched;else elseBlockFirstName">
+
+                            <input type="text" class="form-control" placeholder="Enter First Name" name="firstname"
+                                formControlName="firstName" id="firstname" [ngClass]="{
+                            'border border-danger': signupForm.get('firstName').errors?.required || signupForm.get('firstName').errors?.minlength || signupForm.get('firstName').errors?.maxlength, 
+                            '': !signupForm.get('firstName').errors?.required || !signupForm.get('firstName').errors?.minlength || !signupForm.get('firstName').errors?.maxlength
+                          }" />
+                            <div>
+                                <div class="text-danger position-absolute"
+                                    *ngIf="signupForm.get('firstName').errors?.minlength || signupForm.get('firstName').errors?.maxlength">
+                                    Length should be between 2 & 50!
+                                </div>
+
+                                <div class="text-danger position-absolute"
+                                    *ngIf="signupForm.get('firstName').errors?.required">
+                                    First Name is required!
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                    <ng-template #elseBlockFirstName><input type="text" class="form-control"
+                            placeholder="Enter First Name" formControlName="firstName" id="firstname"
+                            name="firstName" /></ng-template>
+                    <div class="col-sm-12 col-md-6 mt-4">
+                        <label for="lastname">Last Name*</label>
+                        <span *ngIf="signupForm.get('lastName').touched;else elseBlockLastName">
+                            <input type="text" class="form-control " placeholder="Enter Last Name" name="lastname"
+                                formControlName="lastName" id="lastname" [ngClass]="{
+                                'border border-danger': signupForm.get('lastName').errors?.required || signupForm.get('lastName').errors?.minlength || signupForm.get('lastName').errors?.maxlength, 
+                                '': !signupForm.get('lastName').errors?.required || !signupForm.get('lastName').errors?.minlength || !signupForm.get('lastName').errors?.maxlength
+                              }" />
+                            <div>
+                                <div class="text-danger position-absolute"
+                                    *ngIf="signupForm.get('lastName').errors?.minlength || signupForm.get('lastName').errors?.maxlength">
+                                    Length should be between 2 & 50!
+                                </div>
+
+                                <div class="text-danger position-absolute"
+                                    *ngIf="signupForm.get('lastName').errors?.required">
+                                    Last Name is required!
+                                </div>
+                            </div>
+                        </span>
+                        <ng-template #elseBlockLastName>
+                            <input type="text" class="form-control " placeholder="Enter Last Name" name="lastname"
+                                formControlName="lastName" id="lastname" />
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="form-row ml-3 mr-3">
+                    <div class="col-sm-12 col-md-6  mt-4">
+                        <label for="password">Password*</label>
+                        <span *ngIf="signupForm.get('password').touched;else elseBlockPassword">
+                            <input type="password" class="form-control " placeholder="Enter Password" name="password"
+                                formControlName="password" id="password" [ngClass]="{
+                                'border border-danger': signupForm.get('password').errors?.required || signupForm.get('password').errors?.minlength || signupForm.get('password').errors?.maxlength, 
+                                '': !signupForm.get('password').errors?.required || !signupForm.get('password').errors?.minlength || !signupForm.get('password').errors?.maxlength
+                              }" />
+                            <div>
+                                <div class="text-danger position-absolute"
+                                    *ngIf="signupForm.get('password').errors?.minlength || signupForm.get('password').errors?.maxlength">
+                                    Password should be between 2 & 15!
+                                </div>
+
+                                <div class="text-danger position-absolute"
+                                    *ngIf="signupForm.get('password').errors?.required">
+                                    Password is required!
+                                </div>
+                            </div>
+                        </span>
+                        <ng-template #elseBlockPassword>
+                            <input type="password" class="form-control " placeholder="Enter Password" name="password"
+                                formControlName="password" id="password" />
+                        </ng-template>
+                    </div>
+                    <div class="col-sm-12 col-md-6 mt-4">
+                        <label for="cnfpassword">Confirm Password*</label>
+                        <span *ngIf="signupForm.get('confirmPassword').touched;else elseBlockConfirmPassword">
+                            <input type="password" class="form-control" placeholder="Confirm Password" name="password"
+                                formControlName="confirmPassword" id="cnfpassword" (keyup)="checkIfMatchingPasswords()"
+                                [ngClass]="{
+                                'border border-danger': signupForm.get('confirmPassword').errors?.required, 
+                                '': !signupForm.get('confirmPassword').errors?.required 
+                              }" />
+                            <div class="text-danger position-absolute"
+                                *ngIf="!checkpass && !signupForm.get('confirmPassword').errors?.required">
+                                Passwords should be same
+                            </div>
+                            <div class="text-danger position-absolute"
+                                *ngIf="signupForm.get('confirmPassword').errors?.required">
+                                Confirm Password is required
+                            </div>
+
+                        </span>
+                        <ng-template #elseBlockConfirmPassword>
+                            <input type="password" class="form-control" placeholder="Confirm Password" name="password"
+                                formControlName="confirmPassword" id="cnfpassword"
+                                (keyup)="checkIfMatchingPasswords()" />
+                        </ng-template>
+                    </div>
+                </div>
+            </section>
+            <section class="border border-danger ml-2 mr-2 pb-4 mt-2">
+                <h4 class="text-alignment text-danger">Personal Details</h4>
+                <div class="form-row ml-3 mr-3">
+                    <div class="col-sm-12 col-md-6 mt-4">
+                        <label for="age">Age*</label>
+                        <span *ngIf="signupForm.get('age').touched;else elseBlockAge">
+                            <input type="number" class="form-control" placeholder="Enter Age" name="age"
+                                formControlName="age" id="age" maxlength="2"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                [ngClass]="{
+                                'border border-danger': signupForm.get('age').errors?.required,
+                                '': !signupForm.get('age').errors?.required 
+                              }" />
+
+                            <div class="text-danger position-absolute" *ngIf="signupForm.get('age').errors?.required">
+                                Age is required!
+                            </div>
+                        </span>
+                        <ng-template #elseBlockAge>
+                            <input type="number"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                class="form-control" maxlength="2" placeholder="Enter Age" name="age"
+                                formControlName="age" id="age" />
+                        </ng-template>
+                    </div>
+                    <div class="col-sm-12 col-md-6 mt-4">
+                        <div formGroupName="genderDivision">
+                            <label for="gender">Gender</label>
+                            <select id="gender" class="form-control" formControlName="gender">
+                                <option *ngFor="let gen of gender" [value]="gen">{{gen}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row ml-3 mr-3">
+                    <div class="col-sm-12 col-md-6  mt-4">
+                        <label for="contactnumber">Contact Number*</label>
+                        <span *ngIf="signupForm.get('contactNo').touched;else elseBlockContactNumber">
+                            <input type="text" class="form-control " placeholder="Enter Contact Number" name="contactNo"
+                                formControlName="contactNo" id="contactnumber"
+                                onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+                                [ngClass]="{
+                                'border border-danger': signupForm.get('contactNo').errors?.required || signupForm.get('contactNo').errors?.minlength || signupForm.get('contactNo').errors?.maxlength,
+                                '': !signupForm.get('contactNo').errors?.required  || !signupForm.get('contactNo').errors?.minlength || !signupForm.get('contactNo').errors?.maxlength
+                              }" />
+
+                            <div class="text-danger position-absolute"
+                                *ngIf="signupForm.get('contactNo').errors?.minlength || signupForm.get('contactNo').errors?.maxlength">
+                                Contact Number should be of 10 digits!
+                            </div>
+                            <div class="text-danger position-absolute"
+                                *ngIf="signupForm.get('contactNo').errors?.required">
+                                Contact Number is required
+                            </div>
+                        </span>
+                        <ng-template #elseBlockContactNumber>
+                            <input type="text" class="form-control " placeholder="Enter Contact Number" name="contactNo"
+                                formControlName="contactNo" id="contactnumber"
+                                onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" />
+                        </ng-template>
+                    </div>
+                    <div class="col-sm-12 col-md-6 mt-4">
+                        <label for="emailid">Email*</label>
+                        <span *ngIf="signupForm.get('emailId').touched;else elseBlockEmail">
+                            <input type="text" class="form-control" placeholder="Enter Email id" name="emailId"
+                                formControlName="emailId" id="emailid" [ngClass]="{
+                                'border border-danger': signupForm.get('emailId').errors?.required,
+                                '': !signupForm.get('emailId').errors?.required 
+                              }" />
+                            <div class="text-danger position-absolute" *ngIf="signupForm.get('emailId').errors?.email">
+                                Please enter valid email!
+                            </div>
+                            <div class="text-danger position-absolute"
+                                *ngIf="signupForm.get('emailId').errors?.required">
+                                Email Id is required!
+                            </div>
+                        </span>
+                        <ng-template #elseBlockEmail>
+                            <input type="text" class="form-control" placeholder="Enter Email id" name="emailId"
+                                formControlName="emailId" id="emailid" />
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="form-row ml-3 mr-3">
+                    <div class="col-sm-12 col-md-6  mt-4">
+                        <label for="weight">Weight*</label>
+                        <span *ngIf="signupForm.get('weight').touched;else elseBlockWeight">
+                            <input type="number" class="form-control " placeholder="Enter your weight" name="weight"
+                                formControlName="weight" id="weight" [ngClass]="{
+                                'border border-danger': signupForm.get('weight').errors?.required,
+                                '': !signupForm.get('weight').errors?.required 
+                              }"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                maxLength=3 />
+                            <div class="text-danger position-absolute"
+                                *ngIf="signupForm.get('weight').errors?.required">
+                                Please enter your weight!
+                            </div>
+                        </span>
+                        <ng-template #elseBlockWeight>
+                            <input type="number" class="form-control " placeholder="Enter your weight" name="weight"
+                                formControlName="weight" id="weight"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                maxLength=3 />
+                        </ng-template>
+                    </div>
+                    <div class="col-sm-12 col-md-6 mt-4">
+                        <div formGroupName="bloodGroupDivision">
+                            <label for="bloodgroup">Blood Group*</label>
+
+                            <select id="bloodgroup" class="form-control" formControlName="bloodGroup" name="bloodGroup"
+                                (click)="bloodGroupCheck($event.target.value)" [ngClass]="{
+                                'border border-danger': bloodGroupEmpty && checkClick
+                              }">
+                                <option *ngFor="let bg of bloodGroups" [value]="bg">{{bg}}
+                                </option>
+                            </select>
+                            <div class="text-danger position-absolute" *ngIf="bloodGroupEmpty && checkClick">
+                                Enter your bloodGroup!
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row ml-3 mr-3">
+                    <div class="col-sm-12 col-md-4  mt-4">
+                        <div formGroupName="stateDivision">
+                            <label for="state">State*</label>
+                            <select id="state" (change)="changeState($event.target.value)"
+                                (click)="stateCheck($event.target.value)" class="form-control" formControlName="state"
+                                name="state" [ngClass]="{
+                                    'border border-danger': stateEmpty && stateClick
+                                  }">
+                                <option *ngFor="let state of stateList" [value]="state.name"> {{state.name}}
+                                </option>
+                            </select>
+                            <div class="text-danger position-absolute" *ngIf="stateEmpty && stateClick">
+                                Enter State!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 mt-4">
+
+                        <div formGroupName="areaDivision">
+                            <label for="area">Area*</label>
+                            <select id="area" class="form-control" formControlName="area" name="area"
+                                (click)="areaClickFun(signupForm.get('areaDivision').get('area').value)" [ngClass]="{
+                                    'border border-danger': areaEmpty && areaClick
+                                  }">
+                                <option *ngFor="let area of cities" [value]="area">{{area}}
+                                </option>
+                            </select>
+                            <div class="text-danger  position-absolute small"
+                                *ngIf="!signupForm.get('stateDivision').get('state').touched && signupForm.get('areaDivision').get('area').touched  ">
+                                Select state first !
+                            </div>
+                            <div class="text-danger  position-absolute "
+                                *ngIf="signupForm.get('areaDivision').get('area').touched && signupForm.get('stateDivision').get('state').touched 
+                            && signupForm.get('stateDivision').get('state').dirty && !signupForm.get('areaDivision').get('area').dirty || areaClick && areaEmpty">
+                                Area is required !
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 mt-4">
+                        <label for="pincode">Pincode*</label>
+                        <span *ngIf="signupForm.get('pincode').touched;else elseBlockpincode">
+                            <input type="number" class="form-control" placeholder="Enter pincode" name="pincode"
+                                formControlName="pincode" id="pincode" maxlength="6"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                [ngClass]="{
+                                'border border-danger': signupForm.get('pincode').errors?.required,
+                                '': !signupForm.get('pincode').errors?.required 
+                              }" />
+                            <div class="text-danger position-absolute"
+                                *ngIf="signupForm.get('pincode').errors?.required">
+                                Pincode required!
+                            </div>
+                        </span>
+                        <ng-template #elseBlockpincode>
+                            <input type="number" class="form-control" placeholder="Enter pincode" name="pincode"
+                                formControlName="pincode" id="pincode" maxlength="6"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
+                        </ng-template>
+                    </div>
+                </div>
+            </section>
+            <div class="form-row mt-3 mb-5 ml-3">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-danger mt-2 "
+                        [disabled]="!signupForm.valid || bloodGroupEmpty  || stateEmpty ||!checkpass || areaClick && areaEmpty || areaEmpty || userPresent">Signup</button>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>

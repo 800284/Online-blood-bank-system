@@ -1,0 +1,102 @@
+<div class="jumbotron ">
+    <div class="container con container-size">
+        <div class="row">
+            <div class="col-3 justify-content-center d-flex font-size-custom"><a
+                    [routerLink]="['/home', {outlets: {'customoutlet': ['donate']}}]" class="text-white">Donate</a>
+            </div>
+            <div class="col-3 justify-content-center d-flex font-size-custom"><a
+                    [routerLink]="['/home', {outlets: {'customoutlet': ['experiences']}}]"
+                    class="text-white">Experiences</a></div>
+            <div class="col-3 justify-content-center d-flex font-size-custom"><a
+                    [routerLink]="['/home', {outlets: {'customoutlet': ['tips']}}]" class="text-white">Tips</a></div>
+            <div class="col-3 justify-content-center d-flex font-size-custom"><a
+                    [routerLink]="['/home', {outlets: {'customoutlet': ['availability']}}]" class="text-white">Check
+                    availability</a>
+            </div>
+        </div>
+        <div>
+            <router-outlet name="customoutlet"></router-outlet>
+        </div>
+
+
+    </div>
+</div>
+<app-view-all-blood-requirements></app-view-all-blood-requirements>
+<div *ngIf="notificationStatus" class="text-alignment">
+    <a [routerLink]="['/notifications','true']">
+        <h3 class="text-danger">
+            New Notifications
+        </h3>
+    </a>
+
+</div>
+
+<div class="row mr-3 ml-3 pr-0">
+    <div class="col p-0 ">
+        <h2 class="text-alignment  ">Why to donate blood?</h2>
+        <h5 class="text-alignment">Giving blood to other save lives</h5>
+        <div class="justify-content-center d-flex"><button class="btn btn-danger" *ngIf="isLogin()"
+                routerLink="/donation-request">Donate</button></div>
+        <div class="justify-content-center d-flex"><button class="btn btn-danger" *ngIf="!isLogin()"
+                routerLink="/register">Register</button></div>
+    </div>
+
+    <div class="col p-0 d-none d-lg-block image-alignment p-0">
+        <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTQmTtHlkgYOW0qmfVvtuzYUJ7us0LiTXRoMz7dqSiPN0QHmB6u">
+    </div>
+
+</div>
+<div class="row mr-3 ml-3">
+    <div class="col p-0 image-alignment d-none d-lg-block">
+        <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSGbBuG-hWbYh66Y5eJEVPeqYo5tAPo75kHzg8XgeDrlVgA966M">
+    </div>
+    <div class="col">
+        <h2 class="text-alignment  mt-5">Any Experiences to Share?</h2>
+        <h5 class="text-alignment ">Share your experiences related to blood donation</h5>
+        <div class="justify-content-center d-flex"><button class="btn btn-danger"
+                routerLink="/post-donor-experience">Share now</button></div>
+    </div>
+</div>
+<div class="row mr-3 ml-3">
+    <div class="col d-none p-0 d-lg-block mt-5" *ngIf="getUsername()!='admin'">
+        <h2 class="text-alignment  mt-5">Have doubts on Blood Donation?</h2>
+        <h5 class="text-alignment">Clear them out by read our FAQs.</h5>
+        <div class="text-alignment"><button class="btn btn-danger" routerLink="/faq">FAQs</button></div>
+    </div>
+    <div class="col d-none p-0 d-lg-block mt-5" *ngIf="getUsername()=='admin'">
+        <h2 class=" mt-5 text-alignment">Answer the FAQ'S</h2>
+        <h5 class="text-alignment">Answer the queries which are asked by the donors</h5>
+        <div class="text-alignment"><a class="btn btn-danger" routerLink="/faq">Answer FAQs!</a></div>
+    </div>
+    <div class="col p-0 d-lg-none" *ngIf="getUsername()!='admin'">
+        <h2 class=" mt-5 text-alignment">Have doubts on Blood Donation</h2>
+        <h5 class="text-alignment">Clear them out by asking our experts</h5>
+        <div class="text-alignment"><a class="btn btn-danger" routerLink="/faq">Ask A
+                Question</a></div>
+    </div>
+    <div class="col p-0 d-lg-none" *ngIf="getUsername()=='admin'">
+        <h2 class=" mt-5 text-alignment">Answer the FAQ'S</h2>
+        <h5 class="text-alignment">Answer the queries which are asked by the donors</h5>
+        <div class="text-alignment"><a class="btn btn-danger" routerLink="/faq">Answer FAQs!</a></div>
+    </div>
+
+    <div class="col p-0 image-alignment d-none d-lg-block">
+        <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTvO8OtJXu16aXOX0ACgUhdch_WY8MZfR8FcWN6jfJBAMjo-5OV">
+    </div>
+</div>
+<div class="row mr-3 ml-3">
+    <div class="col p-0 image-alignment d-none d-lg-block">
+        <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQbLTv_JI-g594HrUkyB1oIrh3kNVzT5iD8zqk3cH9xV9Mf6DNf">
+    </div>
+    <div class="col p-0">
+        <h2 class="justify-content-center d-flex   mt-5">Require blood?</h2>
+        <h5 class="text-alignment">Check avalaibilty for the blood group you require</h5>
+        <div class="justify-content-center d-flex" routerLink="/blood-availability"><button class="btn btn-danger">Check
+                avalaibilty</button></div>
+    </div>
+</div>
+<app-view-all-donor-experiences></app-view-all-donor-experiences>

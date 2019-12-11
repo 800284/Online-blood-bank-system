@@ -1,0 +1,145 @@
+<section class="p-3 ">
+    <div class="row faq-margin" *ngIf="getUserName()!='admin'">
+        <div class="col-lg-6 pl-0 pr-0 ">
+            <div class="container pl-0 pr-0">
+                <div class="accordion " id="accordionExample">
+                    <div class="card">
+                        <div class="card-header bg-danger" id="headingOne">
+                            <h1 class="mb-0">
+                                <button class="btn btn-link text-white  " type="button" data-toggle="collapse"
+                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <span class="form-row">
+                                        <h4 class="text-white text-alignment"><i
+                                                class="fa fa-question-circle mt-2 mr-2"></i>Frequently Asked Questions
+                                        </h4>
+                                    </span>
+                                </button>
+                            </h1>
+                        </div>
+                    </div>
+                    <div id="collapseOne" class="collapse show " data-parent="#accordionExample">
+                        <div class="accordion container mt-3 pr-0 " id="accordionExample2">
+                            <div class="card " *ngFor="let x of faqArray">
+                                <div class="card-header nav-color  p-1  test-scroll" id="heading">
+                                    <h1 class="mb-0 justify-content-left d-flex">
+
+                                        <button class="btn btn-link text-danger form-row " type="button"
+                                            data-toggle="collapse" [attr.data-target]="'#id'+ x.id">
+                                            {{x.question}}
+                                            <div class="form-row text-dark pl-1">
+                                                <small> Qusetion id : {{x.id}}</small>
+                                            </div>
+                                        </button>
+
+                                    </h1>
+                                </div>
+
+                                <div [attr.id]="'id' + x.id" class="collapse test-scroll"
+                                    data-parent="#accordionExample2">
+                                    <div class="card-body">
+
+                                        {{x.answer}}
+
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mt-5">
+            <div class="container pl-0 pr-0 mt-5">
+                <section class="border shadow-lg rounded-lg faq-section-margin p-5">
+                    <h1 class="text-danger">Can't see the question you want?Ask your own!</h1>
+                    <div *ngIf="!answerSuccess">
+                        <form [formGroup]="faqForm" (ngSubmit)="postQuestion(faqForm)">
+                            <textarea class="form-row form-control ml-1 pr-0" formControlName="question"></textarea>
+                            <button class="btn btn-danger mt-3 ml-1" *ngIf="isLoggedIn()">Post Question</button>
+                            <a class="btn btn-danger mt-3 ml-1" *ngIf="!isLoggedIn()" routerLink="/login">Post
+                                Question</a>
+                        </form>
+                    </div>
+                    <div *ngIf="answerSuccess" class="alert alert-success">
+                        Question posted Successfully!
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </div>
+    <div class="row faq-margin" *ngIf="getUserName()=='admin'">
+        <div class="col-sm-12  col-lg-12 ">
+            <div class="container">
+
+                <div class="accordion " id="accordionExample">
+                    <div class="card">
+                        <div class="card-header bg-danger" id="headingOne">
+                            <h1 class="mb-0">
+                                <button class="btn btn-link text-white  " type="button" data-toggle="collapse"
+                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <h4 class="text-white text-alignment">Frequently Asked Questions To Answer</h4>
+                                </button>
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="alert alert-danger mt-2" *ngIf="isEmpty()">
+                        No questions to answer!
+                    </div>
+                    <div *ngIf="answerPosted;else elseBlock" class="alert alert-success mt-3">
+                        Answer posted sucessfullly
+                    </div>
+                    <ng-template #elseBlock>
+                        <div id="collapseOne" class="collapse show " data-parent="#accordionExample">
+                            <div class="accordion container mt-3  " id="accordionExample2">
+                                <div class="card " *ngFor="let x of faqArray">
+                                    <div class="card-header nav-color  p-1  test-scroll" id="heading">
+                                        <h1 class="mb-0 justify-content-left d-flex">
+
+                                            <button class="btn btn-link text-danger form-row " type="button"
+                                                data-toggle="collapse" [attr.data-target]="'#id'+ x.id">
+                                                {{x.question}}
+                                                <div class="form-row text-dark pl-1">
+                                                    <small> Qusetion id : {{x.id}}</small>
+                                                </div>
+                                            </button>
+
+                                        </h1>
+                                    </div>
+
+                                    <div [attr.id]="'id' + x.id" class="collapse test-scroll"
+                                        data-parent="#accordionExample2">
+                                        <div class="card-body">
+                                            <div *ngIf="getUserName()!='admin'">
+                                                {{x.answer}}
+                                            </div>
+                                            <div *ngIf="x.answer==null && !(answerQuestion  && faqid==x.id) ">
+                                                <button class="btn btn-danger" (click)="giveAnswer(x)">Post
+                                                    Answer!</button>
+                                            </div>
+                                            <div *ngIf="answerQuestion  && faqid==x.id && !answerPosted">
+                                                <form [formGroup]="answerFaqForm"
+                                                    (ngSubmit)="answerFaqFunction(answerFaqForm)">
+                                                    <textarea class="form-control" formControlName="answer"></textarea>
+                                                    <button class="btn btn-danger mt-1">Post Answer!</button>
+
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

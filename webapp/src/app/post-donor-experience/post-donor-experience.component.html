@@ -1,0 +1,74 @@
+<div class="container">
+    <section class="border shadow-lg rounded-lg section-margin">
+        <h1 class="mt-5 ml-3 text-alignment text-danger">Share your Experience!</h1>
+        <div *ngIf="!shareStatus">
+            <form class="text-secondary" [formGroup]="donorExperienceForm" (ngSubmit)="share(donorExperienceForm)">
+                <div class="row font-20 ml-3 mr-3">
+                    <div class="col-md-6 mt-3 form-group">
+                        <label class="font-weight-bold text-red" for="field-hospitalName">Hospital Name*</label>
+                        <input type="text"
+                            [ngClass]="[donorExperienceForm.get('hospitalName').dirty && donorExperienceForm.get('hospitalName').valid ? 'is-valid' : '',
+                            donorExperienceForm.get('hospitalName').dirty && donorExperienceForm.get('hospitalName').invalid ? 'is-invalid' : '', 
+                            (donorExperienceForm.get('hospitalName').valid || donorExperienceForm.get('hospitalName').invalid) ? 'form-control mb-1' : '']"
+                            name="hospitalName" id="field-hospitalName" placeholder="Enter Hospital Name"
+                            formControlName="hospitalName">
+                        <div class="text-danger font-weight-bold position-absolute small"
+                            *ngIf="donorExperienceForm.get('hospitalName').dirty && donorExperienceForm.get('hospitalName').errors?.required">
+                            Hospital Name is required !
+                        </div>
+                        <div class="text-danger font-weight-bold position-absolute small" *ngIf="donorExperienceForm.get('hospitalName').dirty && (donorExperienceForm.get('hospitalName').errors?.minlength 
+                            || donorExperienceForm.get('hospitalName').errors?.maxlength)">
+                            Length should be between 2 & 15 !
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-3 form-group">
+                        <label class="font-weight-bold text-red" for="field-city">City*</label>
+                        <input type="text"
+                            [ngClass]="[donorExperienceForm.get('city').dirty && donorExperienceForm.get('city').valid ? 'is-valid' : '',
+                            donorExperienceForm.get('city').dirty && donorExperienceForm.get('city').invalid ? 'is-invalid' : '', 
+                            (donorExperienceForm.get('city').valid || donorExperienceForm.get('city').invalid) ? 'form-control mb-1' : '']"
+                            name="city" id="field-city" placeholder="Enter City" formControlName="city">
+                        <div class="text-danger font-weight-bold position-absolute small"
+                            *ngIf="donorExperienceForm.get('city').dirty && donorExperienceForm.get('city').errors?.required">
+                            City is required !
+                        </div>
+                        <div class="text-danger font-weight-bold position-absolute small"
+                            *ngIf="donorExperienceForm.get('city').dirty && (donorExperienceForm.get('city').errors?.minlength || donorExperienceForm.get('city').errors?.maxlength)">
+                            Length should be between 2 & 15 !
+                        </div>
+                    </div>
+                </div>
+                <div class="row font-20 ml-3 mr-3">
+                    <div class="col-md-12 mt-3 form-group">
+                        <label class="font-weight-bold text-red" for="field-feedbackComments">Feedback Comments*</label>
+                        <textarea
+                            [ngClass]="[donorExperienceForm.get('feedbackComments').dirty && donorExperienceForm.get('feedbackComments').valid ? 'is-valid' : '',
+                        donorExperienceForm.get('feedbackComments').dirty && donorExperienceForm.get('feedbackComments').invalid ? 'is-invalid' : '', 
+                        (donorExperienceForm.get('feedbackComments').valid || donorExperienceForm.get('feedbackComments').invalid) ? 'form-control mb-1' : '']"
+                            name="feedbackComments" rows="3" id="field-feedbackComments"
+                            formControlName="feedbackComments">
+                    </textarea>
+                        <div class="text-danger font-weight-bold position-absolute small"
+                            *ngIf="donorExperienceForm.get('feedbackComments').dirty && donorExperienceForm.get('feedbackComments').errors?.required">
+                            Feedback Comments is required !
+                        </div>
+                        <div class="text-danger font-weight-bold position-absolute small" *ngIf="donorExperienceForm.get('feedbackComments').dirty && (donorExperienceForm.get('feedbackComments').errors?.minlength 
+                            || donorExperienceForm.get('feedbackComments').errors?.maxlength)">
+                            Length should be between 2 & 15 !
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row mt-3 mb-5 ml-3 ">
+                    <button type="submit" class="btn btn-danger font-weight-bold font-20"
+                        [disabled]="!donorExperienceForm.valid">
+                        Share</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="alert alert-success ml-3 mr-3" *ngIf="shareStatus">
+            Experience details saved successfully! Go to <a routerLink="/home">Home</a> To view
+        </div>
+
+    </section>
+</div>

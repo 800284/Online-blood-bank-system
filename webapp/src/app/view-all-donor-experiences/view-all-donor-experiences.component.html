@@ -1,0 +1,24 @@
+<div class="container text-alignment mt-5">
+    <div class="alert bg-danger alert-box-requirement text-white  mr-5">
+        Donor Experience
+    </div>
+    <div class="notify-requirement mr-5">
+        <table class="table table-hover font-20">
+            <thead class="text-danger ">
+                <tr>
+                    <th>Hospital Name</th>
+                    <th>City</th>
+                    <th>Feedback Comments</th>
+                </tr>
+            </thead>
+            <tbody class="font-weight-bold">
+                <tr *ngFor="let experience of donorExperience">
+                    <td>{{ experience.hospitalName }}</td>
+                    <td>{{ experience.city }}</td>
+                    <td>{{ experience.feedbackComments }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
