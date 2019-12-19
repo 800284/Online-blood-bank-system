@@ -41,7 +41,7 @@ public class UserController {
 	@Autowired
 	PasswordEncoder passwordEncoder; 
 	
-	@GetMapping()
+	@GetMapping("/get-user")
 	public List<User> getAllUsers() {
 		return userRepository.findAll();
 	}
@@ -59,15 +59,7 @@ public class UserController {
 		List<String> errors = new ArrayList<String>();
 
 		// Accumulate all errors in an ArrayList of type String
-		for (ConstraintViolation<User> violation : violations) {
-			errors.add(violation.getMessage());
-		}
-
-		// Throw exception so that the user of this web service receives appropriate
-		// error message
-		if (violations.size() > 0) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errors.toString());
-		}
+	
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		LOGGER.info("END");

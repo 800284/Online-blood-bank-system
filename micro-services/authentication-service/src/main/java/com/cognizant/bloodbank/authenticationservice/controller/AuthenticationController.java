@@ -42,7 +42,7 @@ public class AuthenticationController {
 		LOGGER.info("END");
 		return map;
 	}
-
+	@GetMapping()
 	private String getUser(String authHeader) {
 		LOGGER.info("START");
 		String encodedCredentials = authHeader.split(" ")[1];

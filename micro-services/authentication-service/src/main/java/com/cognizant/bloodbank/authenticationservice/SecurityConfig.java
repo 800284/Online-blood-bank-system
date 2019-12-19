@@ -38,7 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		LOGGER.info("Start");
 		httpSecurity.cors();
 		httpSecurity.csrf().disable().httpBasic().and().authorizeRequests().antMatchers("/blood-bank/users").permitAll()
-				.anyRequest().authenticated().and().addFilter(new JwtAuthorizationFilter(authenticationManager()));
+		.antMatchers("/blood-bank/users/get-user").permitAll().anyRequest().authenticated().and()
+		.addFilter(new JwtAuthorizationFilter(authenticationManager()));
 		LOGGER.info("End");
 	}
 
